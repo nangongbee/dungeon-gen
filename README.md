@@ -71,4 +71,6 @@ tests/             连通、短路比、钥匙门、同 seed 复现
 
 MIT，见 [LICENSE](LICENSE)。
 
+设计说明：[有主线的地牢](https://nangongbee.github.io/2026/11/12/dungeon-with-a-main-path/)
+
 GitHub: [nangongbee](https://github.com/nangongbee) · bumble.timwu@gmail.com
