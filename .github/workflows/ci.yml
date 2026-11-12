@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+
+jobs:
+  core:
+    name: core (no SDL)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install
+        run: sudo apt-get update && sudo apt-get install -y cmake g++
+      - name: Build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DDUNGEON_BUILD_PLAY=OFF
+          cmake --build build -j
+          test -x build/dungeon_cli
+          test ! -e build/dungeon_play
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: CLI smoke
+        run: ./build/dungeon_cli --seed 12345
+
+  play:
+    name: play (SDL2 + ImGui)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ libsdl2-dev
+      - name: Cache FetchContent
+        uses: actions/cache@v4
+        with:
+          path: .fc-cache
+          key: fetchcontent-imgui-v1.91.8-${{ runner.os }}
+      - name: Build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+            -DFETCHCONTENT_BASE_DIR="${GITHUB_WORKSPACE}/.fc-cache"
+          cmake --build build -j
+          test -x build/dungeon_cli
+          test -x build/dungeon_play
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: CLI smoke
+        run: ./build/dungeon_cli --seed 12345
