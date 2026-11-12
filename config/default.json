@@ -1,0 +1,14 @@
+{
+  "mainRooms": [10, 12],
+  "totalRooms": [20, 25],
+  "subPaths": [3, 4],
+  "monsterNums": [5, 8],
+  "doors": 2,
+  "superChests": 1,
+  "middleChests": 2,
+  "smallChests": 0,
+  "hasBoss": true,
+  "shortcutRatio": 0.6,
+  "sizeRatioLimit": 4,
+  "eliteRate": 0.0
+}

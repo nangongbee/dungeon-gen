@@ -1,0 +1,9 @@
+build/
+out/
+.cache/
+.fc-cache/
+.DS_Store
+*.user
+compile_commands.json
+CMakeFiles/
+CMakeCache.txt
